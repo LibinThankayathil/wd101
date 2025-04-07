@@ -123,5 +123,40 @@
     </button>
   </div>
 
+  <script>
+    const email = document.getElementById('email');
+    email.addEventListener('input', () => validate(email));
+  
+    function validate(element) {
+      if (element.validity.typeMismatch) {
+        element.setCustomValidity("The Email is not in the right format!!!");
+        element.reportValidity();
+      } else {
+        element.setCustomValidity('');
+      }
+    }
+
+    const dob = document.getElementById('dob');
+    dob.addEventListener('input', () => validateDOB(dob));
+
+    function validateDOB(element) {
+      const inputDate = new Date(element.value);
+      const today = new Date();
+
+      const minAgeDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+      const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+      if (inputDate < minAgeDate || inputDate > maxAgeDate) {
+        element.setCustomValidity("Age must be between 18 and 55 years.");
+        element.reportValidity();
+      } else {
+        element.setCustomValidity('');
+      }
+    }
+
+  
+  </script>
+  
+
 </body>
 </html>
