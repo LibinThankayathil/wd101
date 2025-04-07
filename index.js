@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             userTableBody.appendChild(row);
         });
-
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const userId = this.getAttribute('data-user-id');
