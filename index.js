@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userTableBody = document.getElementById('userTableBody');
     const clearDataSection = document.getElementById('clearDataSection');
     const clearAllDataBtn = document.getElementById('clearAllData');
-
+    
     // Real-time password validation
     passwordInput.addEventListener('input', validatePassword);
     
@@ -182,15 +182,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadUserData() {
     const userData = JSON.parse(localStorage.getItem('userData')) || [];
     
-    // Show/hide the table section based on whether we have data
-    if (userData.length > 0) {
-        registeredUsersSection.classList.remove('hidden');
-        clearDataSection.classList.remove('hidden');
-    } else {
-        registeredUsersSection.classList.add('hidden');
-        clearDataSection.classList.add('hidden');
-        return;
-    }
     
     // Clear existing table rows
     userTableBody.innerHTML = '';
