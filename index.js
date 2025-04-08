@@ -76,24 +76,31 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         let isValid = true;
 
-        [nameError, emailError, dobError, passwordError, termsError].forEach(el => el.classList.add('hidden'));
+        [nameError, passwordError, termsError].forEach(el => el.classList.add('hidden'));
 
-        if (!validate(email)) {
-            email.setCustomValidity("The Email is not in the right format!!!");
-            email.reportValidity();
-            isValid = false;
-        } else {
-            email.setCustomValidity('');
-        }
-  
-  
-        if (!validateDOB(dob)) {
-            dob.setCustomValidity("Age must be between 18 and 55 years.");
-            dob.reportValidity();
-            isValid = false;
-        } else {
-            dob.setCustomValidity('');
-        }
+        // Check if email is empty
+    if (!email.value.trim()) {
+        email.setCustomValidity("Email is required");
+        email.reportValidity();
+        isValid = false;
+    } 
+    // Check email format using the validate function
+    else if (!validate(email)) {
+        isValid = false;
+        // The validate function already handles setting and reporting validity
+    }
+
+    // Check if DOB is empty
+    if (!dob.value.trim()) {
+        dob.setCustomValidity("Date of Birth is required");
+        dob.reportValidity();
+        isValid = false;
+    } 
+    // Check DOB value using the validateDOB function
+    else if (!validateDOB(dob)) {
+        isValid = false;
+        // The validateDOB function already handles setting and reporting validity
+    }
 
         if (!nameInput.value.trim()) {
             nameError.classList.remove('hidden');
