@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const today = new Date();
     
     // Calculate dates for 18 and 55 years ago
-    const minAgeDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+    const minAgeDate = new Date(today.getFullYear() - 56, today.getMonth(), today.getDate());
     const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     const theDate = new Date(1970, 1, 2, 5, 30, 0); 
     
