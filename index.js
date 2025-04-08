@@ -23,14 +23,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Validate Email
     email.addEventListener('input', () => validate(email));
     function validate(element) {
+        // Always clear previous custom validity first
+        element.setCustomValidity('');
+    
+        // Check if it's empty
+        if (!element.value.trim()) {
+            element.setCustomValidity("Email is required");
+            element.reportValidity();
+            return false;
+        }
+    
+        // Check format
         if (element.validity.typeMismatch) {
             element.setCustomValidity("The Email is not in the right format!!!");
             element.reportValidity();
             return false;
-        } else {
-            element.setCustomValidity('');
-            return true;
         }
+    
+        return true;
     }
 
     // Validate DOB
