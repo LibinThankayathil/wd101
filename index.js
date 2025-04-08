@@ -76,10 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         let isValid = true;
 
-        [nameError, passwordError, termsError].forEach(el => el.classList.add('hidden'));
+        [nameError, emailError, dobError, passwordError, termsError].forEach(el => el.classList.add('hidden'));
 
-        if (!validate(email)) isValid = false;
-        if (!validateDOB(dob)) isValid = false;
+        if (!validate(email)) {
+            email.setCustomValidity("The Email is not in the right format!!!");
+            email.reportValidity();
+            isValid = false;
+        } else {
+            email.setCustomValidity('');
+        }
+  
+  
+        if (!validateDOB(dob)) {
+            dob.setCustomValidity("Age must be between 18 and 55 years.");
+            dob.reportValidity();
+            isValid = false;
+        } else {
+            dob.setCustomValidity('');
+        }
 
         if (!nameInput.value.trim()) {
             nameError.classList.remove('hidden');
