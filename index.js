@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const nameError = document.getElementById('nameError');
     const passwordError = document.getElementById('passwordError');
     const termsError = document.getElementById('termsError');
-    const emailError = document.getElementById('emailError');
-    const dobError = document.getElementById('dobError');
     const formSuccess = document.getElementById('formSuccess');
 
     const registeredUsersSection = document.getElementById('registeredUsersSection');
@@ -23,38 +21,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const clearAllDataBtn = document.getElementById('clearAllData');
 
     // Validate Email
-    email.addEventListener('input', validateEmail);
-    
-    function validateEmail() {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValid = emailPattern.test(email.value);
-        
-        if (!isValid) {
-            emailError.textContent = "The Email is not in the right format!";
-            emailError.classList.remove('hidden');
+    email.addEventListener('input', () => validate(email));
+    function validate(element) {
+        if (element.validity.typeMismatch) {
+            element.setCustomValidity("The Email is not in the right format!!!");
+            element.reportValidity();
             return false;
         } else {
-            emailError.classList.add('hidden');
+            element.setCustomValidity('');
             return true;
         }
     }
 
     // Validate DOB
-    dob.addEventListener('input', validateDOB);
-    
-    function validateDOB() {
-        const inputDate = new Date(dob.value);
+    dob.addEventListener('input', () => validateDOB(dob));
+    function validateDOB(element) {
+        const inputDate = new Date(element.value);
         const today = new Date();
 
         const minAgeDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
         const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
         if (inputDate < minAgeDate || inputDate > maxAgeDate) {
-            dobError.textContent = "Age must be between 18 and 55 years.";
-            dobError.classList.remove('hidden');
+            element.setCustomValidity("Age must be between 18 and 55 years.");
+            element.reportValidity();
             return false;
         } else {
-            dobError.classList.add('hidden');
+            element.setCustomValidity('');
             return true;
         }
     }
@@ -83,18 +76,16 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         let isValid = true;
 
-        // Reset all error messages
-        [nameError, passwordError, termsError, emailError, dobError].forEach(el => {
-            if (el) el.classList.add('hidden');
-        });
+        [nameError, passwordError, termsError].forEach(el => el.classList.add('hidden'));
 
-        // Validate name
+        if (!validate(email)) isValid = false;
+        if (!validateDOB(dob)) isValid = false;
+
         if (!nameInput.value.trim()) {
             nameError.classList.remove('hidden');
             isValid = false;
         }
 
-        // Validate password
         const password = passwordInput.value;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (!passwordRegex.test(password)) {
@@ -102,18 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         }
 
-        // Validate terms
         if (!termsCheckbox.checked) {
             termsError.classList.remove('hidden');
-            isValid = false;
-        }
-
-        // Validate email and DOB - use the existing functions
-        if (!validateEmail()) {
-            isValid = false;
-        }
-
-        if (!validateDOB()) {
             isValid = false;
         }
 
@@ -178,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td class="py-2 px-4 border-b border-gray-200">${user.email}</td>
                 <td class="py-2 px-4 border-b border-gray-200">${user.password}</td>
                 <td class="py-2 px-4 border-b border-gray-200">${user.dob}</td>
-                <td class="py-2 px-4 border-b border-gray-200">${user.acceptedTerms ? 'Yes' : 'No'}</td>
+                <td class="py-2 px-4 border-b border-gray-200">${user.acceptedTerms}</td>
                 <td class="py-2 px-4 border-b border-gray-200">
                     <button class="delete-btn text-red-600 hover:text-red-800" data-user-id="${user.id}">
                         Delete
@@ -187,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
             userTableBody.appendChild(row);
         });
-
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const userId = this.getAttribute('data-user-id');
