@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const inputDate = new Date(element.value);
         const today = new Date();
 
-        const minAgeDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+        const minAgeDate = new Date(today.getFullYear() - 56, today.getMonth(), today.getDate());
         const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
         if (inputDate < minAgeDate || inputDate > maxAgeDate) {
