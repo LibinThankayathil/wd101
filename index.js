@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (inputDate.getTime() === theDate.getTime()) {
         element.setCustomValidity('');
         return true;
-    } else if (inputDate > maxAgeDate || inputDate <= minAgeDate) {
+    } else if (inputDate > maxAgeDate || inputDate < minAgeDate) {
         element.setCustomValidity("Age must be between 18 and 55 years.");
         element.reportValidity();
         return false;
@@ -126,6 +126,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         if (!passwordRegex.test(password)) {
             passwordError.classList.remove('hidden');
+            isValid = false;
+        }
+
+        const email = email.value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            emailError.classList.remove('hidden');
             isValid = false;
         }
 
