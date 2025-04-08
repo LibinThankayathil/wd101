@@ -64,9 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
         mixedCaseIndicator.classList.toggle('bg-green-500', hasMixedCase);
         mixedCaseIndicator.classList.toggle('bg-gray-300', !hasMixedCase);
 
-        const hasNumber = /\d/.test(password);
-        numberIndicator.classList.toggle('bg-green-500', hasNumber);
-        numberIndicator.classList.toggle('bg-gray-300', !hasNumber);
     }
 
     loadUserData(); // Load data initially
@@ -108,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const password = passwordInput.value;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         if (!passwordRegex.test(password)) {
             passwordError.classList.remove('hidden');
             isValid = false;
