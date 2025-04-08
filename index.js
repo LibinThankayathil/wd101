@@ -46,33 +46,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // Validate DOB
     dob.addEventListener('input', () => validateDOB(dob));
     function validateDOB(element) {
-        const inputDate = new Date(element.value);
-        const today = new Date();
-
-        const minAgeDate = new Date(today.getFullYear() - 56, today.getMonth(), today.getDate());
-        const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-        const theDate = new Date(1970, 1, 2, 5, 30, 0); // February 2, 1970
-        const secondDate = new Date(1969, 3, 8, 5, 30, 0); // April 8, 1969
-
-        if (inputDate.getTime() === theDate.getTime()) {
-            element.setCustomValidity('');
-            return true;
-
-        }else if (inputDate.getTime() === secondDate.getTime()) {
-            element.setCustomValidity("Age must be between 18 and 55 years.");
-            element.reportValidity();
-            return false;
-
-        }else if (inputDate < minAgeDate || inputDate > maxAgeDate) {
-            element.setCustomValidity("Age must be between 18 and 55 years.");
-            element.reportValidity();
-            return false;
-        }    
-         else {
-            element.setCustomValidity('');
-            return true;
-        }
+    if (!element.value) return false;
+    
+    const inputDate = new Date(element.value);
+    const today = new Date();
+    
+    // Calculate dates for 18 and 55 years ago
+    const minAgeDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+    const maxAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    
+    // Check if date is between 18 and 55 years ago
+    if (inputDate > maxAgeDate || inputDate < minAgeDate) {
+        element.setCustomValidity("Age must be between 18 and 55 years.");
+        element.reportValidity();
+        return false;
+    } else {
+        element.setCustomValidity('');
+        return true;
     }
+}
 
     // Password strength indicator
     passwordInput.addEventListener('input', validatePassword);
