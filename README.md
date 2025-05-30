@@ -1,6 +1,7 @@
 # 📝 Simple User Registration Form ✨
 
 A responsive and client-side validated registration form built using **HTML**, **Tailwind CSS**, and **JavaScript**, with user data stored in the browser using `localStorage`. 
+
 🎓 **Final Project for WD101 Web Development Course by Pupilfirst** 🎓
 
 🌐 **[👉 Try it Live Here!](https://libinthankayathil.github.io/wd101/)** 🌐
